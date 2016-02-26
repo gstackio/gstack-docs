@@ -19,7 +19,7 @@ exclude:
   - README.md
   - vendor/
 
-ga_analytics: UA-XXXXXXXX-X
+ga_analytics: UA-74118635-1
 
 gems:
   - jekyll-assets

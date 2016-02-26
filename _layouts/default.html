@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="">
+<html lang="{{ page.language }}">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -21,6 +21,7 @@
 
   <link rel="apple-touch-icon" href="{% asset_path apple-touch-icon.png %}">
 
+  {% stylesheet slate-theme %}
   {% stylesheet application %}
 </head>
 <body>
@@ -30,9 +31,30 @@
       to improve your experience.</p>
   <![endif]-->
 
-  <main role="main">
-    {{ content }}
+  <!-- HEADER -->
+  <div id="header_wrap" class="outer">
+      <header class="inner">
+        <a id="forkme_banner" href="https://github.com/gstackio/gstack-docs">View on GitHub</a>
+
+        <h1 id="project_title">{{ page.title }}</h1>
+        <h2 id="project_tagline">{{ page.tagline }}</h2>
+
+      </header>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main role="main" id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+      {{ content }}
+    </section>
   </main>
+
+  <!-- FOOTER  -->
+  <div id="footer_wrap" class="outer">
+    <footer class="inner">
+      <p>Built in <span style="font-family: 'Arial Unicode MS', 'Apple Symbols'; font-size: 130%;">☮</span> by <a href="http://gstack.io">Gstack</a>, ♡ you all.</p>
+    </footer>
+  </div>
 
   {% javascript vendor %}
   {% javascript application %}
