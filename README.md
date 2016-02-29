@@ -1,5 +1,8 @@
 # GstackDocs
 
+The _Gstack Documentation_ website is maintained as a
+[Kickster](http://kickster.nielsenramon.com/) web site.
+
 ## Installation
 
 Setup your environment:
