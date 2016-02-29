@@ -4,7 +4,6 @@ language: en
 title: Gstack Documentation
 tagline: <em>“Understanding is critical for a developer”</em> – B. Gandon
 description:
-github: index.md
 ---
 ### Welcome to Gstack!
 
