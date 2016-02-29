@@ -1,64 +1,63 @@
 ---
 layout: default
 language: en
-title: "Gstack Documentation"
-tagline: "Because understanding is critical for a developer"
-description: ""
+title: Gstack Documentation
+tagline: <em>“Understanding is critical for a developer”</em> – B. Gandon
+description:
 ---
-### Download the command-line tool
+### Welcome to Gstack!
 
-To install the `gk` command, just run:
+Here at Gstack, we spend a great deal of effort in making sure that you'll
+feel comfortable in using our platform.
 
-    curl -fsSL http://get.gstack.io/please | sh
-
-or:
-
-    wget -qO- http://get.gstack.io/please | sh
-
-Supported platforms are: Linux (64 or 32 bits) and OS X (64 bits).
+If you spot any mistakes, missing details, or have improvements to submit,
+don't hesitate to submit a PR on Github! Every page has a link to its Markdown
+source on Github, to ease your finding the releavant files to update.
 
 
-### Select the Gstack API endpoint and login
+### For the newcomers
 
-First select the API endpoint for Gstack:
+ - [Getting started with Gstack](./getting-started) – Where we tell you the
+   basic steps to follow before entering the Gstack world.
 
-    gk api --skip-ssl-validation https://api.gstack.me
+ - [Your application in the Gstack context](./app-and-context) – Learn the
+   mysteries of the underlying stack on which your applicaiton is going to
+   run. You definitely want to read this.
 
-Then just login, answering the questions asked by the tool:
+ - [Database, Messaging… Plug services into you app!](./plugging-services) –
+   What would be you application without persistence? How would you do
+   micro-services without messaging? Gstack brings you all that very easily.
 
-    gk login
-
-
-### Get help about the `gk` command
-
-For inline help, just type `gk help`.
-
-Beyond that, Gstack is based on Cloud Foundry, there is no secret about that.
-So for now, the `gk` command is just a mere rename of the standatd `cf`
-utility. If you need help, you'll find all sorts of details in the standard
-[Cloud Foundry docs](https://docs.cloudfoundry.org/cf-cli/).
+ - [HTTPS routes](./https-routes) – Unencrypted HTTP is dead. You definitely want
+   to run HTTP<u>S</u>.
 
 
-### Push your first app
+### For experienced buddies
 
-Before you push your first app, you need to:
+ - [Continuous Integration](./continuous-integration) – Who can claim
+   developing real applications with no automated tests and no team? Even if
+   developing alone, you definitely want a Continuous Integration to run you
+   tests automatically.
 
-1. Write an app
-2. Write a Cloud Foundry manifest file, containing just a few YAML properties
-3. Comply to some Cloud Foundry conventions, depending on you app technology
-   (Ruby, Java, etc)
+ - [Managing environments](./environments) – Most real-world apps are not a
+   matter of a single production hosting, but a real development pipeline: a
+   CI instance for your automated tests, a Demo for your Product Manager, an
+   I18n instance for your translators, a Pre-Prod to test deployments in real
+   conditions. Here we'll tell you how to implement such a pipeline on top of
+   Gstack.
 
-Once you are there, you can push you app with `gk push`.
+ - [Configuration Management](./config-management) – Once you have staging
+   environments, they'll require dedicated configurations and you'll need to
+   manage those configurations in a consistent way. This chapter will present
+   you how you can solve this challenge.
 
-This needs services (dasabase especially) and an HTTP/HTTPS route. You'll have
-to setup these and specify their name in your `manifest.yml`.
+ - [Very specific database or service? Bring it on!](./user-provided-services)
+   – Gstack might not offer all the very specific services that you might want
+   to plug into you application. Neo4j, edgy PostgreSQL version, Cassandra,
+   name it. But Gstack gives you the opportunity to deploy them as a dedicated
+   instance for your apps.
 
-If you wonder how to use `gk push`, just type `gk push --help`. You'll find
-more information in the “[Develop and Manage Applications](https://docs.cloudfoundry.org/devguide/)”
-section of Cloud Foundry docs.
-
-
-### Happy Gstack!
-
-You're good to go. Never forget that Google is your friend. ;-)
-
+ - [Non-HTTP(S) apps? Need a TCP port? Come here!](./tcp-routes) – In the
+   growing world of Internet-of-Things (IoT), your app might need to provide
+   IoT devices with TCP services that are not based on HTTP. Let's dive into
+   how to do that with Gstack.
