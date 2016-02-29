@@ -30,7 +30,12 @@ if [ "$BRANCH" == gh-pages ]; then
 fi
 
 # Push to $BRANCH (gh-pages or master).
-git add -fA
+if [ "$BRANCH" == gh-pages ]; then
+  git add -fA
+else
+  # We remove the '-f' option because we need the .gitignore to be observed!
+  git add -A
+fi
 git commit --allow-empty -m "`git log -1 --pretty=%B` [ci skip]"
 git push -f -q origin "$BRANCH"
 
