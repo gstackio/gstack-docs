@@ -7,8 +7,8 @@ set -e
 
 echo "Started deploying"
 
-# BRANCH=${BRANCH:-gh-pages}
-BRANCH=${BRANCH:-master}
+BRANCH=${BRANCH:-gh-pages}
+# BRANCH=${BRANCH:-master}
 
 # Checkout gh-pages branch.
 if git branch | grep -q "^$BRANCH\$"; then
