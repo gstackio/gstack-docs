@@ -11,7 +11,7 @@ BRANCH=${BRANCH:-gh-pages}
 # BRANCH=${BRANCH:-master}
 
 # Checkout gh-pages branch.
-if git branch | grep -q "^$BRANCH\$"; then
+if git branch | grep -Eq "^\s+$BRANCH\$"; then
   git branch -D "$BRANCH"
 fi
 git checkout -b "$BRANCH"
