@@ -12,7 +12,7 @@ feel comfortable in using our platform.
 
 If you spot any mistakes, missing details, or have improvements to submit,
 don't hesitate to submit a PR on Github! Every page has a link to its Markdown
-source on Github, to ease your finding the releavant files to update.
+source on Github, to ease your finding the relevant files to update.
 
 
 ### For the newcomers
