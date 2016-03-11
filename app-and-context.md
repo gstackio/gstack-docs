@@ -5,31 +5,42 @@ title: Your app in Gstack context
 tagline: <em>“Do you want any ham with your mashed potatoe?”</em> – B.&nbsp;Gandon
 description:
 ---
-## The stack below your app
 
-After `gk push`-ing your app in Gstack, three layers will be stacked to bring
-it online, up and running.
+When you push a Docker container to Gstack, there is few mystery about how
+Gstack runs it. It just brings the conntainer up and runs it.
 
-1. A Warden container (Docker also possible)
-2. A root filesystem (misnamed “[Stack](https://docs.cloudfoundry.org/concepts/stacks.html)”
-   in the Cloud Foundry parlance)
+For applications, it's different. There is obviously more processing involved
+before they are packaged into a runnable container.
+
+
+## The stack below your application
+
+After you `gk push` an application to Gstack, three layers will be stacked to
+bring it online, up and running.
+
+1. A Warden container
+2. A root filesystem (usually misnamed
+   “[Stack](https://docs.cloudfoundry.org/concepts/stacks.html)”)
 3. A buildpack, that provides compilation, packaging, and runtime
 
 We detail these 3 layers in reverse order, starting with the “Buildpack” layer
 that is the nearest from Gstack applications.
 
 
-### A Buildpack. What the %!¿*?¡$ is a “Buildpack”??
+### A Buildpack
 
-A “buildpack” is just a package that builds and run your application.
+A “buildpack” is just a package that packages your application in a standard
+way, so that it can then be run.
 
 Buildpack make Gstack incredibly polyglot, because dozen of them have been
 written so far. Even the most funkyest web technologies have a dedicated
-buildpack! Gstack provides a bunch of the most popular and standard ones. But
-you can choose to use any other very easily. When you `gk push` you
-applications, you can specify your custom buildpack, usually with a mere
-Github URL in the `manifest.yml`. Gstack will then proceed downloading and
-using it for your app.
+buildpack!
+
+Gstack provides a bunch of the most popular buildpacks. But you can choose to
+use your own very easily. Indeed, when you `gk push` you applications, you can
+specify a custom buildpack, usually with a mere Github URL on the command line
+or in the `manifest.yml`. Gstack will then proceed downloading and using it
+for your app.
 
 The design of buildpacks is very simple, which for sure participated to its
 outstanding success.
@@ -65,7 +76,7 @@ For example, it provides basic C and C++ compilers, and script engines like
 `bash`, `perl`, `python`, `ruby`, `sh`. This is meant to be enough for you to
 download and build any missing technology, whether mainstream like
 [Java](http://www.oracle.com/technetwork/java/javase/downloads/) or
-[Go](https://golang.org/), or funky ones like [Pike](https://github.com/pikelang/Pike)
+[Go](https://golang.org/), or quite funky like [Pike](https://github.com/pikelang/Pike)
 or [Rust](https://github.com/rust-lang/rust).
 
 The standard root filesystem in Gstack is called `cflinuxfs2`. It is based on
@@ -78,16 +89,15 @@ from times to times. Only a Gstack admin can deploy a new version of a root
 filesystem.
 
 
-### A Container (Warden or Docker)
+### A Warden Container
 
 Why not just [Docker](https://www.docker.com/)?
 
-> <a href="https://en.wikipedia.org/wiki/TL;DR">TL;DR</a>: Actually
-> Warden and Docker were created at the same time. Although they are
-> very similar container technologies, Warden is provided by Gstack
-> because historically, Warden has always been more in line with the
-> the use cases and requirements of the Cloud Foundry infrastructure,
-> which is the backbone of Gstack.
+> <a href="https://en.wikipedia.org/wiki/TL;DR">TL;DR</a>: Actually it
+> makes little difference because Warden and Docker are very similar
+> technologies. Created nearly at the same time, they evolved
+> targetting different audiences. Even if Warden is provided for
+> historical reasons, it still fits best the Gstack use cases.
 
 Gstack is based on Cloud Foundry and historically, Cloud Foundry started
 creating its own container technology, called
@@ -103,13 +113,18 @@ external API.
 For example, Docker said that containers would not control their network
 settings because in their use cases, it was easier for end-users to have the
 container engine impose consistent network settings to containers. Warden
-didn't do that because it didn"t make sense in its context. On the contrary,
-Warden had to be managed by some external API, so that many Warden backends
-can be managed by a central “brain” called “Cloud Controller”. An external API
-was for sure no priority to Docker at the time, as a consequence of the
-intended focus on real-user interactions.
+didn't do that because it didn"t make sense in its context. In turns, Warden
+had to be managed by some external API, so that many Warden backends can be
+managed by a central “brain” called “Cloud Controller”. An external API was
+for sure no priority to Docker at the time, as a consequence of the intended
+focus on real-user interactions.
 
-This explains why applications that are pushed on Gstack using a buildpack,
-are then deployed in Warden containeres. But thanks to the
-[Diego](https://github.com/cloudfoundry-incubator/diego) technology,
-developers can also push full-blown Docker containers in Gstack.
+This explains why applications that are pushed on Gstack (using a buildpack),
+are deployed in Warden containeres. And now developers can also push full-
+blown Docker containers in Gstack.
+
+
+## Further readings
+
+Now that you know how applications are deployed in Gstack, you might be
+interested in [writing your own](../create-application).

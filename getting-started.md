@@ -5,9 +5,11 @@ title: Getting started with Gstack
 tagline: <em>“Every project should onboard newcomers in a snap”</em> – B.&nbsp;Gandon
 description:
 ---
-## Get the Gstack command-line tool
+## Get the Gstack tooling
 
-To install the `gk` command, just run:
+All you need to interact with Gstack is the `gk` command-line tool.
+
+To install `gk`, just run:
 
     curl -fsSL http://get.gstack.io/please | sh
 
@@ -15,16 +17,17 @@ or:
 
     wget -qO- http://get.gstack.io/please | sh
 
+<small>
 Supported platforms are: Linux (64 or 32 bits) and OS X (64 bits only).
 Windows users need to download [here](https://github.com/cloudfoundry/cli#downloads)
-the original `cf` tool (called “[CLI](https://en.wikipedia.org/wiki/Command-line_interface)”).
+the original `cf` tool and rename it `gk`.
+</small>
 
-Gstack *is* a Cloud Foundry deployment—no secret about that. So for now, using
-the standard `cf` utility is exactly the same, because the `gk` command is just
-a swaggish rename of it.
+Once the installation is done, you are ready to log in to Gstack and push
+containers or applications online.
 
 
-## Select the Gstack API endpoint and login
+## Log in to Gstack
 
 First select the API endpoint for Gstack:
 
@@ -44,88 +47,100 @@ like this:
 
 Easy as that.
 
+After you first login, you are operating in the context of a Gstack
+“Organization”. A Gstack operator has created it for you, so you don't need to
+bother.
 
-## Get help about the `gk` command
+Moreover, the applications you push will belong to a space. The Gstack
+operator has created two spaces named `staging` and `production`. For a first
+try, you'll need to target the `staging` space:
 
-For inline help, just type `gk help`.
+    gk target -s staging
 
-As Gstack is based on Cloud Foundry, and the `gk` command just a mere rename
-of the standatd `cf` utility, you'll find any help you need in the standard
-[Cloud Foundry docs](https://docs.cloudfoundry.org/cf-cli/).
-
-
-## Push your first app
-
-Before you can `gk push` your first app, you first need to:
-
-1. Write an application.
-2. Write a Cloud Foundry `manifest.yml` file, containing just a few YAML
-   properties.
-3. Comply to some Cloud Foundry conventions, depending on you app technology
-   (Ruby, Java, etc).
-
-Ready? Let's go!
+And you are ready.
 
 
-### Write an application
+## Push your first Docker container
 
-This subject is beyond the scope if this *Getting Started* guide. Depending on
-which language you are familiar with, we recommend you follow one of our
-detailed step-by-step tutorials. Those will guide you in writing web applications
-that follow state-of-the-arts best practice.
+1. **Push** a sample container. To avoid name conflicts, pick a random number
+   between 1 and 100, like `42` and append it to the name of your app in the
+   following command:
 
- - [Java](../create-application/java)
- - [Ruby](../create-application/ruby)
- - [Node](../create-application/node)
- - [PHP](../create-application/php)
- - [Go](../create-application/golang)
- - [Python](../create-application/python)
+        gk push my-first-gstack-app-42 -o cloudfoundry/lattice-app -m 4M -k 10M
 
+   <small>
+   (The `cloudfoundry/lattice-app` sample container is available
+   [on Docker Hub](https://hub.docker.com/r/cloudfoundry/lattice-app/).)
+   </small>
 
-### Write your `manifest.yml`
+2. **Browse** your app on the web:
 
-More to come in this section. PRs are welcome!
+        open http://my-first-gstack-app-42.gstack.me
 
-In the meanwhile, go read the
-“[Deploying with Application Manifests](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html)”
-section of the stock Cloud Foundry docs.
+3. Once you're done, **delete** your test application and its route.
 
-
-### Comply with Cloud Foundry conventions
-
-More to come in this section. PRs are welcome!
-
-Here are a few of those conventions:
-
- - Ruby apps need a `config.ru` file, and recommend you also provide a
-   `Procfile`.
-
- - For correct database migrations in Ruby apps, you'll need a
-   `cf:on_first_instance` trivial Rake task.
-
- - The PostgreSQL-BDR service provided by Gstack is based on BDR, which
-   unfortunately has tough limitations. Expecially, database migrations with
-   combo `ALTER TABLE … ADD COLUMN … DEFAULT` statements will be rejected.
-   You'll have to spli those into separate `ALTER TABLE … ADD COLUMN` and
-   `ALTER TABLE … SET DEFAULT` statemente. We currently have no easy solution
-   to that but if you find one, we are please to hear!
+        gk delete my-first-gstack-app-42
+        gk delete-route -f gstack.me -n my-first-gstack-app-42
 
 
-### Ready to `gk push`?
+## Push your first application
 
-That's it, you're ready.
+When you push a public container from Docker Hub, you get it online, but
+as-is. What about pushing some applicaiton code that we have customized
+ourselves?
 
-If you wonder how to use `gk push`, just type `gk push --help`. You'll find
-more information in the “[Develop and Manage Applications](https://docs.cloudfoundry.org/devguide/)”
-section of Cloud Foundry docs.
+In this process we don't need to first create a public Docker Hub container.
+Instead, our application will be directly sent from our computer to Gstack,
+and deployed there within a private container.
+
+1. **Grab** a sample application
+
+        git clone https://github.com/cloudfoundry-samples/lattice-app.git gstack-gsg
+        cd gstack-gsg
+
+2. **Customize** your application. Edit the `handlers/hello.go` file in your
+   favorite text editor, and change the content of the `<div class="hello">`.
+   For example, if your name is “Benjamin”, you can put this:
+
+          <div class="hello">
+              Benjamin here! Gstack Rocks!
+          </div>
+
+3. **Push** it to Gstack. To avoid name conflicts, pick a random number
+   between 1 and 100, like `42`, and append it to the name of your app in the
+   following command:
+
+        gk push my-first-gstack-app-42 -b go_buildpack -m 4M -k 10M
+
+   <small>
+   (If you wonder what the above settings mean, try `gk push --help`.)
+   </small>
 
 
-## Further readings
+4. **Browse** your app on the web!
 
-After you `gk push` your app, Gstack will create an “HTTP route”, so that you
-can access it with your web browser. Read our [HTTPS Guide](../https-routes) to
-implement an encrypted “HTTPS route”.
+        open http://my-first-gstack-app-42.gstack.me
 
-To plug a database into your app, see our [Services Guide](../plugging-services).
-You'll learn how those services shall find their way into your
-`manifest.yml` deployment descriptor.
+   From there, you can try editing `handlers/hello.go` again, and `gk push`
+   the result to update your app.
+
+5. Once you're done, **delete** your test application and its route.
+
+        gk delete my-first-gstack-app-42
+        gk delete-route -f gstack.me -n my-first-gstack-app-42
+
+
+## Go further
+
+Now that you have pushed your first container and application, you might be
+interested in [writing your own application](../create-application)!
+
+In this guide, you may have noticed that you accessed your app with an
+non-encrypted `http://` scheme. That's because Gstack creates “HTTP routes”
+by default. Go read our [HTTPS Guide](../https-routes) to implement an
+encrypted “HTTPS route”.
+
+In this guide our sample application doesn't use any database. See our
+[Services Guide](../plugging-services) to learn how to plug a database into
+your app, and how the setup shall find its way into your `manifest.yml`
+deployment descriptor.

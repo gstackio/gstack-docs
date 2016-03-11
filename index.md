@@ -28,6 +28,11 @@ source on Github, to ease your finding the relevant files to update.
    What would be you application without persistence? How would you do
    micro-services without messaging? Gstack brings you all that very easily.
 
+ - [Write your own applications](./create-application) – With the technology
+   you prefer. It's up to you.
+
+ - [Help on command line](./command-line) – For those who need it.
+
  - [HTTPS routes](./https-routes) – Unencrypted HTTP is dead. You definitely want
    to run HTTP<u>S</u>.
 

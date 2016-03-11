@@ -24,3 +24,9 @@ h6 code {
 	font-size: inherit;
 	font-weight: normal;
 }
+
+/* Fix small text not being smaller, and have it compatible with inline code */
+small,
+small code {
+	font-size: 85%;
+}
