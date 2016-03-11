@@ -20,7 +20,7 @@ These are the standard services that Gstack can provide. If you need custom
 services, you can push Docker containers and have your application use those.
 
 
-## Plug a database
+## Plug a database, like MySQL
 
 ### Available plans
 
@@ -50,10 +50,10 @@ durability.
 It's a 2-steps process.
 
 1. Create the database
-2. Bind the database to your application
+2. Bind the database to an application
 
 
-#### Create database
+#### Create a database
 
 To create the database, you specify the service name (i.e. the database
 technology here), the service plan (which is the capacity required here), and
@@ -68,7 +68,7 @@ call it `mysql_db/jelly_beans_staging`. And you would type:
 Your database is ready for being used by an application!
 
 
-#### Bind database
+#### Bind the database
 
 The recommended way of doing is to create a `manifest.yml` file, specify the
 database service name in there, and finaly run `gk push`.
@@ -99,10 +99,11 @@ find all the necessary information in this `manifest.yml`.
 
 #### Different databases for different environments
 
-If you have a `staging` and a `production` environments, you'll create two
-manifest files instead of one. They will be called `manifest_staging.yml` and
-`manifest_production.yml`. Each one of them will specify a different database
-name. For example, the `manifest_production.yml` would look like this:
+When you use a `staging` space and a `production`space to model different
+environments, you create two manifest files instead of one. They will be
+called `manifest_staging.yml` and `manifest_production.yml`. Each one of them
+will specify a different database name. For example, the
+`manifest_production.yml` would look like this:
 
 ```yaml
 ---

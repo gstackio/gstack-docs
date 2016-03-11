@@ -28,7 +28,7 @@ source on Github, to ease your finding the relevant files to update.
    What would be you application without persistence? How would you do
    micro-services without messaging? Gstack brings you all that very easily.
 
- - [Write your own applications](./create-application) – With the technology
+ - [Write your own applications](./create-application) – Using the language
    you prefer. It's up to you.
 
  - [Help on command line](./command-line) – For those who need it.
@@ -66,3 +66,12 @@ source on Github, to ease your finding the relevant files to update.
    growing world of Internet-of-Things (IoT), your app might need to provide
    IoT devices with TCP services that are not based on HTTP. Let's dive into
    how to do that with Gstack.
+
+### Wanna contribute?
+
+At Gstack, we are a band of buddies hosting our own apps. Thus, Gstack is an
+open, community-fueld platform. Anyone is welcome to contribute to it.
+
+Details on how this will take place are in the process of being specified,
+though. For sure, contributions will take place on Github through pull
+requests, as it is the case for this documentation.
