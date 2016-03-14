@@ -2,7 +2,7 @@
 layout: default
 language: en
 title: Your app in Gstack context
-tagline: <em>“Do you want any ham with your mashed potatoe?”</em> – B.&nbsp;Gandon
+tagline: <em>“Do you want any ham with your mashed potatoe?”</em> <span class="nowrap">– B. Gandon</span>
 description:
 ---
 

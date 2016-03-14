@@ -2,7 +2,7 @@
 layout: default
 language: en
 title: Getting started with Gstack
-tagline: <em>“Every project should onboard newcomers in a snap”</em> – B.&nbsp;Gandon
+tagline: <em>“Every project should onboard newcomers in a snap”</em> <span class="nowrap">– B. Gandon</span>
 description:
 ---
 ## Get the Gstack tooling

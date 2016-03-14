@@ -2,7 +2,7 @@
 layout: default
 language: en
 title: Plug services into your apps
-tagline: <em>“Who writes apps with no database out there? Who?”</em> – B.&nbsp;Gandon
+tagline: <em>“Who writes apps with no database out there? Who?”</em> <span class="nowrap">– B. Gandon</span>
 description:
 ---
 

@@ -2,7 +2,7 @@
 layout: default
 language: en
 title: Write your own application
-tagline: <em>“Developers love to express their creativity”</em> – B.&nbsp;Gandon
+tagline: <em>“Developers love to express their creativity”</em> <span class="nowrap">– B. Gandon</span>
 description:
 ---
 ## Overview

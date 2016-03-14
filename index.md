@@ -2,7 +2,7 @@
 layout: default
 language: en
 title: Gstack Documentation
-tagline: <em>“Understanding is critical for a developer”</em> – B. Gandon
+tagline: <em>“Understanding is critical for a developer”</em> <span class="nowrap">– B. Gandon</span>
 description:
 ---
 ### Welcome to Gstack!
