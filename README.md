@@ -27,3 +27,7 @@ Used tools:
 Run this in the root project folder in your console:
 
     bin/deploy
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gstackio/gstack-docs/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
