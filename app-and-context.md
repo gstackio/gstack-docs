@@ -11,8 +11,8 @@ to Gstack, there is few mystery about how Gstack runs it. It just brings the
 conntainer up and runs it.
 
 When you push an applications to Gstack, it will also end up as a runnable
-Docker container. But this container will be generated on the fly. We detail
-here how this is done.
+Docker container. But this one will be generated on the fly. We detail here
+how this is done.
 
 
 ## The stack below your application
@@ -20,10 +20,10 @@ here how this is done.
 After you `gk push` an application to Gstack, three layers will be stacked to
 bring it online, up and running.
 
-1. A Docker **container**, that provides isolation to run the binaries that
-   power your application.
-2. A **root filesystem**, that provides basics for your application to compile
-   and run.
+1. A Docker **container**, that provides isolation to the runtime binaries
+   that power your application.
+2. A **root filesystem**, that provides basics for your application runtime to
+   be compiled and run.
 3. A **buildpack**, that provides compilation, packaging, and runtime.
 
 We detail these 3 layers in reverse order, starting with the “Buildpack” layer
@@ -32,20 +32,15 @@ that is the nearest from your applications.
 
 ### A Buildpack
 
-A “buildpack” is just a package that packages your application in a standard
-way, so that it can then be run.
+A “buildpack” is just a bunch of tools that are able to package your
+application in a standard way, so that it can then be run. Gstack provides
+some of the most popular buildpacks: [Go](../create-application/golang),
+[Java](../create-application/java), [Node.js](../create-application/node),
+[PHP](../create-application/php), [Python](../create-application/python),
+and [Ruby](../create-application/ruby). Each one of these supports all the
+major frameworks and dialects of the central technology it addresses.
 
-Buildpack make Gstack incredibly polyglot, because dozen of them have been
-written so far. Even the most funkyest web technologies have a dedicated
-buildpack!
-
-Gstack provides a bunch of the most popular buildpacks. But you can choose to
-use your own very easily. Indeed, when you `gk push` you applications, you can
-specify a custom buildpack, usually with a mere Github URL on the command line
-or in the `manifest.yml`. Gstack will then proceed downloading and using it
-for your app.
-
-The design of buildpacks is very simple, which for sure participated to its
+The design of buildpacks is very simple, which participated to their
 outstanding success.
 
  - A buildpack is either packaged as a __git repository__, or a __zip archive__.
@@ -54,19 +49,26 @@ outstanding success.
        application.
     2. `bin/compile` that builds the application, after this has run, your
        application is completely ready to be started.
-    3. `bin/release` that explains the system how to run the application, and
-       especially the exact command line to run, and any required
-       [environement variables](https://en.wikipedia.org/wiki/Environment_variable)
+
+    3. `bin/release` that details how to run the application: which command
+       line to execute, and which [environement variables](https://en.wikipedia.org/wiki/Environment_variable)
        to provide.
  - The 3 scripts above will be called in sequence.
-    - As input, they take specific environment variables.
-    - As output, they return specific exit codes, print plain text logs, or
-      dump some YAML-formatted properties.
+    - As input, they take specific arguments.
+    - As output, they return specific exit codes, print logs, or dump some
+      YAML-formatted properties.
 
-Buildpacks were first designed by Heroku back in… well… a long time ago.
-Considering their success, they were later adopted by Cloud Foundry. For more
+Buildpack make Gstack incredibly polyglot, because dozen of them have been
+written so far. Even the most funkyest web technologies have a dedicated
+buildpack! Besides the standard Gstack buildpacks, you can choose to use your
+own very easily when you `gk push` you applications. You just need to specify
+a mere Github URL on the command line or in the `manifest.yml`. Gstack will
+then proceed downloading and using it for your app.
+
+Buildpacks were first designed by Heroku. Considering their success, they were
+later adopted by others and they are now available in Gstack. For more
 details, go watch the [Heroku Buildpacks](http://talks.codegram.com/heroku-buildpacks)
-presentation. It's definitely brilliant.
+presentation, it's brilliant.
 
 
 ### A Root Filesystem
@@ -84,9 +86,7 @@ or [Rust](https://github.com/rust-lang/rust).
 
 The standard root filesystem in Gstack is called `cflinuxfs2`. It is based on
 a stable Ubuntu Linux distribution and contains something like 21,000+ files.
-
-When using Gstack, you can see which root filesystems are available with the
-command `gk stacks`.
+You can see which root filesystems are available in Gstack with `gk stacks`.
 
 
 ### A Docker container

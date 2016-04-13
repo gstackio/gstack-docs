@@ -24,12 +24,12 @@ Go follow our detailed step-by-step tutorials, depending on which language you
 are familiar with. Those will guide you in writing web applications that
 follow state-of-the-arts best practice.
 
- - [Java](../create-application/java)
- - [Ruby](../create-application/ruby)
- - [Node](../create-application/node)
- - [PHP](../create-application/php)
  - [Go](../create-application/golang)
+ - [Java](../create-application/java)
+ - [Node.js](../create-application/node)
+ - [PHP](../create-application/php)
  - [Python](../create-application/python)
+ - [Ruby](../create-application/ruby)
 
 
 ### Write your `manifest.yml`
