@@ -6,11 +6,13 @@ tagline: <em>“Do you want any ham with your mashed potatoe?”</em> <span clas
 description:
 ---
 
-When you push a Docker container to Gstack, there is few mystery about how
-Gstack runs it. It just brings the conntainer up and runs it.
+When you [push a Docker container](./getting-started#push-your-first-docker-container)
+to Gstack, there is few mystery about how Gstack runs it. It just brings the
+conntainer up and runs it.
 
-For applications, it's different. There is obviously more processing involved
-before they are packaged into a runnable container.
+When you push an applications to Gstack, it will also end up as a runnable
+Docker container. But this container will be generated on the fly. We detail
+here how this is done.
 
 
 ## The stack below your application
@@ -18,13 +20,14 @@ before they are packaged into a runnable container.
 After you `gk push` an application to Gstack, three layers will be stacked to
 bring it online, up and running.
 
-1. A Warden container
-2. A root filesystem (usually misnamed
-   “[Stack](https://docs.cloudfoundry.org/concepts/stacks.html)”)
-3. A buildpack, that provides compilation, packaging, and runtime
+1. A Docker **container**, that provides isolation to run the binaries that
+   power your application.
+2. A **root filesystem**, that provides basics for your application to compile
+   and run.
+3. A **buildpack**, that provides compilation, packaging, and runtime.
 
 We detail these 3 layers in reverse order, starting with the “Buildpack” layer
-that is the nearest from Gstack applications.
+that is the nearest from your applications.
 
 
 ### A Buildpack
@@ -82,46 +85,14 @@ or [Rust](https://github.com/rust-lang/rust).
 The standard root filesystem in Gstack is called `cflinuxfs2`. It is based on
 a stable Ubuntu Linux distribution and contains something like 21,000+ files.
 
-When using Gstack, you can see which root file systems are available with the
-command `gk stacks` (indeed, root filesystems are misnamed “stacks” in Cloud
-Foundry). New versions are released [here](https://github.com/cloudfoundry/stacks/releases)
-from times to times. Only a Gstack admin can deploy a new version of a root
-filesystem.
+When using Gstack, you can see which root filesystems are available with the
+command `gk stacks`.
 
 
-### A Warden Container
+### A Docker container
 
-Why not just [Docker](https://www.docker.com/)?
-
-> <a href="https://en.wikipedia.org/wiki/TL;DR">TL;DR</a>: Actually it
-> makes little difference because Warden and Docker are very similar
-> technologies. Created nearly at the same time, they evolved
-> targetting different audiences. Even if Warden is provided for
-> historical reasons, it still fits best the Gstack use cases.
-
-Gstack is based on Cloud Foundry and historically, Cloud Foundry started
-creating its own container technology, called
-“[Warden](https://github.com/cloudfoundry/warden)”, nearly at the same time
-Docker did. They just didn't met the same level of popularity.
-
-Before Docker reached its outstanding success, Warden and Docker were both
-obscure technologies, both following their own path as they were targeting
-different audiences. To make long story short, Docker focused on human
-end-users, whereas Warden was created to be controlled by machines, through an
-external API.
-
-For example, Docker said that containers would not control their network
-settings because in their use cases, it was easier for end-users to have the
-container engine impose consistent network settings to containers. Warden
-didn't do that because it didn"t make sense in its context. In turns, Warden
-had to be managed by some external API, so that many Warden backends can be
-managed by a central “brain” called “Cloud Controller”. An external API was
-for sure no priority to Docker at the time, as a consequence of the intended
-focus on real-user interactions.
-
-This explains why applications that are pushed on Gstack (using a buildpack),
-are deployed in Warden containeres. And now developers can also push full-
-blown Docker containers in Gstack.
+Your application as built, augmented and packaged by the buildpack will run
+inside a Docker container.
 
 
 ## Further readings
