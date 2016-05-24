@@ -1,4 +1,4 @@
-# GstackDocs
+# Gstack Docs [![.](http://gaproxy.gstack.io/UA-74118635-2/github.com/gstackio/gstack-docs/readme?pixel)](https://github.com/gstackio/ga-beacon)
 
 The _Gstack Documentation_ website is maintained as a
 [Kickster](http://kickster.nielsenramon.com/) web site.
