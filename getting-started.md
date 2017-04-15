@@ -31,7 +31,7 @@ containers or applications online.
 
 First select the API endpoint for Gstack:
 
-    gk api --skip-ssl-validation https://api.gstack.me
+    gk api https://api.gstack.me
 
 Then just login with `gk login`, and the tool will ask you your credential
 like this:
