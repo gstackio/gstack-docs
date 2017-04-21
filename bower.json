@@ -1,6 +1,0 @@
-{
-  "name": "gstack_docs",
-  "dependencies": {
-    "jquery": "~1.12.0"
-  }
-}

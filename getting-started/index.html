@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Gstack Docs | Getting started with Gstack</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Getting started with Gstack">
+  <meta property="og:url" content="http://docs.gstack.io">
+  <meta property="og:description" content="">
+  <meta property="og:site_name" content="Gstack Docs">
+  <meta property="og:image" content="">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="http://docs.gstack.io">
+  <meta name="twitter:title" content="Getting started with Gstack">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="">
+
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/assets/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/assets/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/apple-touch-icon-152x152.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/assets/apple-touch-icon-180x180.png" />
+  <link rel="icon" type="image/png" href="/assets/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/assets/favicon-16x16.png" sizes="16x16" />
+  <meta name="application-name" content="Gstack"/>
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <meta name="msapplication-TileImage" content="/assets/mstile-144x144.png" />
+
+  <link type="text/css" rel="stylesheet" href="/assets/slate-theme.css">
+  <link type="text/css" rel="stylesheet" href="/assets/application.css">
+</head>
+<body>
+  <!--[if lt IE 8]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong>
+      browser. Please <a href="http://browsehappy.com/">upgrade your browser</a>
+      to improve your experience.</p>
+  <![endif]-->
+
+  <!-- HEADER -->
+  <div id="header_wrap" class="outer">
+      <header class="inner">
+        <a id="forkme_banner" href="https://github.com/gstackio/gstack-docs/blob/master/getting-started.md">View on GitHub</a>
+
+        <a href="http://www.gstack.io" title="Gstack main website">
+          <img class="logo" src="/assets/logo-gstack-90x90.png" alt="Gstack">
+        </a>
+        <h1 id="project_title">Getting started with Gstack</h1>
+        <h2 id="project_tagline"><em>“Every project should onboard newcomers in a snap”</em> <span class="nowrap">– B. Gandon</span></h2>
+
+      </header>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main role="main" id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+      <p><small><a href="/">← Back to Gstack Docs</a></small></p>
+
+<h2 id="get-the-gstack-tooling">Get the Gstack tooling</h2>
+
+<p>All you need to interact with Gstack is the <code class="highlighter-rouge">gk</code> command-line tool.</p>
+
+<p>To install <code class="highlighter-rouge">gk</code>, just run:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>curl -fsSL http://get.gstack.io/please | sh
+</code></pre>
+</div>
+
+<p>or:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>wget -qO- http://get.gstack.io/please | sh
+</code></pre>
+</div>
+
+<p><small>
+Supported platforms are: Linux (64 or 32 bits) and OS X (64 bits only).
+Windows users need to download <a href="https://github.com/cloudfoundry/cli#downloads">here</a>
+the original <code class="highlighter-rouge">cf</code> tool and rename it <code class="highlighter-rouge">gk</code>.
+</small></p>
+
+<p>Once the installation is done, you are ready to log in to Gstack and push
+containers or applications online.</p>
+
+<h2 id="log-in-to-gstack">Log in to Gstack</h2>
+
+<p>First select the API endpoint for Gstack:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>gk api https://api.gstack.me
+</code></pre>
+</div>
+
+<p>Then just login with <code class="highlighter-rouge">gk login</code>, and the tool will ask you your credential
+like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ gk login
+API endpoint: https://api.gstack.me
+
+Email&gt; benjamin@exmple.org
+
+Password&gt; ********
+Authenticating...
+OK
+</code></pre>
+</div>
+
+<p>Easy as that.</p>
+
+<p>After you first login, you are operating in the context of a Gstack
+“Organization”. A Gstack operator has created it for you, based on your family
+name. Anyway, you don’t need to bother.</p>
+
+<p>Moreover, the applications you push will belong to a “Space”, inside your
+“Organization”. The Gstack operator has created a default space named
+<code class="highlighter-rouge">staging</code> for you to start using Gstack. Right now, you don’t need to bother.
+“Organization” and “Space” are just organizational boxes that tell <em>where</em>
+your applications will be on Gstack.</p>
+
+<p>So, you are ready.</p>
+
+<h2 id="play-around-with-a-docker-container">Play around with a Docker container</h2>
+
+<p>The whole point in this example is to push an application on Gstack, and see
+that you can access it immediately with your web brower.</p>
+
+<p>This requires a domain name to acces your app. Good news, a Gstack operator
+has created a <code class="highlighter-rouge">gstack.me</code> subdomain for you only, named after your family
+name. For example, if your family name is <code class="highlighter-rouge">gandon</code>, your own subdomain will be
+<code class="highlighter-rouge">gandon.gstack.me</code>. You can see that with the following command:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    $ gk domains
+    ...
+    gandon.gstack.me   owned
+</code></pre>
+</div>
+
+<ol>
+  <li>
+    <p>Select your own subdomain and put it in a variable for later use (and
+simplicity of this tutorial):</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> owned_domain=$(LANG=en gk domains | awk '/owned/{print $1}')
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p><strong>Push</strong> a sample container.</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> gk push wow-cool -o gstack/sample-app -m 8M -k 16M -d "$owned_domain"
+</code></pre>
+    </div>
+
+    <p><small>
+(The <code class="highlighter-rouge">gstack/sample-app</code> sample container is available
+<a href="https://hub.docker.com/r/gstack/sample-app/">on Docker Hub</a>.)
+</small></p>
+  </li>
+  <li>
+    <p><strong>Browse</strong> your app on the web.</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> open "http://wow-cool.$owned_domain"
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p><strong>Scale up</strong> your app to 3 instances.</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> gk scale wow-cool -i 3
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p><strong>Refresh</strong> your browser several time to see the app index changing. This
+means that web requests are properly load-balanced across the 3 instances
+of your app.</p>
+  </li>
+  <li>
+    <p>Once you’re done, <strong>clean up</strong> your resources, deleting the test app and
+its route. (Once again, replace <code class="highlighter-rouge">gandon</code> by your actual family name.)</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> gk delete wow-cool
+ gk delete-route "$owned_domain" -n wow-cool
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<h2 id="push-your-own-source-code">Push your own source code</h2>
+
+<p>When you push a public container from Docker Hub, you get it online, but
+as-is. What about pushing some applicaiton code that we have customized
+ourselves?</p>
+
+<p>In this process we don’t need to first create a public Docker Hub container.
+Instead, our application will be directly sent from our computer to Gstack,
+and deployed there within a private container.</p>
+
+<ol>
+  <li>
+    <p><strong>Grab</strong> a sample application</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> git clone https://github.com/gstackio/sample-app.git gstack-gsg
+ cd gstack-gsg
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p><strong>Customize</strong> your application. Edit the <code class="highlighter-rouge">handlers/hello.go</code> file in your
+favorite text editor, and change the content of the <code class="highlighter-rouge">&lt;div class="hello"&gt;</code>.
+For example, if your name is “Benjamin”, you can put this:</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>   &lt;div class="hello"&gt;
+       Benjamin here! Gstack Rocks!
+   &lt;/div&gt;
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p><strong>Push</strong> it to Gstack.</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> owned_domain=$(LANG=en gk domains | awk '/owned/{print $1}')
+
+ gk push i-am -d "$owned_domain"
+</code></pre>
+    </div>
+
+    <p>Here you see that your source code is first built, and then deployed on
+Gstack.</p>
+
+    <p>You’ll notice that we create a shell variable named <code class="highlighter-rouge">owned_domain</code>. That’s
+just to automate the work of selecting your own subdomain when deploying
+the app. This ensures your app is accessed with a URL that is unique.</p>
+  </li>
+  <li>
+    <p><strong>Browse</strong> your app on the web!</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> open "http://i-am.$owned_domain"
+</code></pre>
+    </div>
+
+    <p>From there, you can try editing <code class="highlighter-rouge">handlers/hello.go</code> again, and <code class="highlighter-rouge">gk push</code>
+the result to update your app.</p>
+  </li>
+  <li>
+    <p>Once you’re done, <strong>delete</strong> your the created resources, i.e. the test
+application and its route.</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> gk delete i-am
+ gk delete-route "$owned_domain" -n i-am
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<h2 id="go-further">Go further</h2>
+
+<p>Now that you have pushed your first container and application, you might be
+interested in <a href="../create-application">writing your own application</a>!</p>
+
+<p>In this guide, you may have noticed that you accessed your app with an
+non-encrypted <code class="highlighter-rouge">http://</code> scheme. That’s because Gstack creates “HTTP routes”
+by default. Go read our <a href="../https-routes">HTTPS Guide</a> to implement an
+encrypted “HTTPS route”.</p>
+
+<p>In this guide our sample application doesn’t use any database. See our
+<a href="../plugging-services">Services Guide</a> to learn how to plug a database into
+your app, and how the setup shall find its way into your <code class="highlighter-rouge">manifest.yml</code>
+deployment descriptor.</p>
+
+<p><small><a href="/">← Back to Gstack Docs</a></small></p>
+
+    </section>
+  </main>
+
+  <!-- FOOTER  -->
+  <div id="footer_wrap" class="outer">
+    <footer class="inner">
+      <p>Built in <span style="font-family: 'Arial Unicode MS', 'Apple Symbols'; font-size: 130%;">☮</span> by <a href="http://gstack.io">Gstack</a>, with ♡ for you all.</p>
+    </footer>
+  </div>
+
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+  <script type="text/javascript" src="/assets/application.js"></script>
+
+<!--
+  <script>
+    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+    e.src='https://www.google-analytics.com/analytics.js';
+    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+    ga('create','','auto');ga('send','pageview');
+  </script>
+-->
+  <!-- Google Tag Manager -->
+  <noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=GTM-WLHTPB" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WLHTPB');
+  </script>
+  <!-- End Google Tag Manager -->
+</body>
+</html>

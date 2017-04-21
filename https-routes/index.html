@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Gstack Docs | HTTPS routes for your apps</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="HTTPS routes for your apps">
+  <meta property="og:url" content="http://docs.gstack.io">
+  <meta property="og:description" content="">
+  <meta property="og:site_name" content="Gstack Docs">
+  <meta property="og:image" content="">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="http://docs.gstack.io">
+  <meta name="twitter:title" content="HTTPS routes for your apps">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="">
+
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/assets/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/assets/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/apple-touch-icon-152x152.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/assets/apple-touch-icon-180x180.png" />
+  <link rel="icon" type="image/png" href="/assets/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/assets/favicon-16x16.png" sizes="16x16" />
+  <meta name="application-name" content="Gstack"/>
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <meta name="msapplication-TileImage" content="/assets/mstile-144x144.png" />
+
+  <link type="text/css" rel="stylesheet" href="/assets/slate-theme.css">
+  <link type="text/css" rel="stylesheet" href="/assets/application.css">
+</head>
+<body>
+  <!--[if lt IE 8]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong>
+      browser. Please <a href="http://browsehappy.com/">upgrade your browser</a>
+      to improve your experience.</p>
+  <![endif]-->
+
+  <!-- HEADER -->
+  <div id="header_wrap" class="outer">
+      <header class="inner">
+        <a id="forkme_banner" href="https://github.com/gstackio/gstack-docs/blob/master/https-routes.md">View on GitHub</a>
+
+        <a href="http://www.gstack.io" title="Gstack main website">
+          <img class="logo" src="/assets/logo-gstack-90x90.png" alt="Gstack">
+        </a>
+        <h1 id="project_title">HTTPS routes for your apps</h1>
+        <h2 id="project_tagline"><em>“Nowadays, no apps should consider HTTP anymore”</em> <span class="nowrap">– B. Gandon</span></h2>
+
+      </header>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main role="main" id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+      <p><small><a href="/">← Back to Gstack Docs</a></small></p>
+
+<h2 id="its-already-there-baby">It’s already there, baby</h2>
+
+<p>There’s actually nothing to do for <code class="highlighter-rouge">https://</code> on Gstack. It just works out of
+the box.</p>
+
+<p>No setup, no certificates fuss, nothing. You access your application with the
+<code class="highlighter-rouge">https://</code> scheme and it just works.</p>
+
+<p>There’s a few thing to note about that, though.</p>
+
+<h2 id="from-your-app-point-of-view">From your app point of view</h2>
+
+<p>Requests to <code class="highlighter-rouge">https://</code> pages are transparently proxied to your app by the
+Gstack infrastructure. You application only has to answer <code class="highlighter-rouge">http://</code> requests.</p>
+
+<p>If your application needs to differentiate whether it is access securely or
+not, go have a look at the <code class="highlighter-rouge">X-Forwarded-Proto</code> HTTP header in the request that
+you app receives.</p>
+
+<h2 id="how-to-use-my-own-domain">How to use my own domain?</h2>
+
+<p>You just have to point you DNS record to the Gstack platform. For this, create
+a <code class="highlighter-rouge">CNAME</code> record that points to <code class="highlighter-rouge">prod.gstack.io.</code>.</p>
+
+<p>And then you’ll create the corresponding route in Gstack. Most of the time,
+you’ll just push your app with your own domain specified as its route <small>(like in
+the <a href="../getting-started">Getting Started</a> guide)</small>, and this will create the
+expected route for you.</p>
+
+<h2 id="behind-the-scenes">Behind the scenes</h2>
+
+<p>We automatically generate <a href="https://letsencrypt.org/">Let’s Encrypt</a>
+certificates when you first access your app with your web browser. This
+process takes about 8 seconds to complete.</p>
+
+<p>But when you bind your app to a <code class="highlighter-rouge">gstack.me</code> subdomain, be aware that that we
+are subject to Let’s Encrypt
+<a href="https://letsencrypt.org/docs/rate-limits/">rate limits</a>! If not already done,
+<strong>we urge you to consult these limits</strong> and be very frugal when generating
+certificates for new domain names!</p>
+
+<p>That’s why you should observe the following rule:</p>
+
+<p><strong><em>→ Please only start using HTTPS when you are sure you won’t change the route
+that your app is bound to.</em></strong></p>
+
+<h2 id="why-do-we-speak-about-routes">Why do we speak about “Routes”?</h2>
+
+<p>When you push your app to Gstack, it is deployed and bound to a URL. Actually,
+from the platform point of view, the URL is something that participates in
+routing web requests through the infrastructure to your application.</p>
+
+<p>Thus, web traffic is actually routed forth (for web requests) and back (for
+web responses). That’s why we speak about HTTPS “routes”.</p>
+
+<p>If you are curious, you can list the routes created in your current Org and
+current Space with the <code class="highlighter-rouge">gk routes</code> command. Once you create a route in a Space
+of your Org, no other Space in any other Org can create the exact same route.</p>
+
+<p><small><a href="/">← Back to Gstack Docs</a></small></p>
+
+    </section>
+  </main>
+
+  <!-- FOOTER  -->
+  <div id="footer_wrap" class="outer">
+    <footer class="inner">
+      <p>Built in <span style="font-family: 'Arial Unicode MS', 'Apple Symbols'; font-size: 130%;">☮</span> by <a href="http://gstack.io">Gstack</a>, with ♡ for you all.</p>
+    </footer>
+  </div>
+
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+  <script type="text/javascript" src="/assets/application.js"></script>
+
+<!--
+  <script>
+    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+    e.src='https://www.google-analytics.com/analytics.js';
+    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+    ga('create','','auto');ga('send','pageview');
+  </script>
+-->
+  <!-- Google Tag Manager -->
+  <noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=GTM-WLHTPB" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WLHTPB');
+  </script>
+  <!-- End Google Tag Manager -->
+</body>
+</html>

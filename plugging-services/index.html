@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Gstack Docs | Plug services into your apps</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Plug services into your apps">
+  <meta property="og:url" content="http://docs.gstack.io">
+  <meta property="og:description" content="">
+  <meta property="og:site_name" content="Gstack Docs">
+  <meta property="og:image" content="">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="http://docs.gstack.io">
+  <meta name="twitter:title" content="Plug services into your apps">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="">
+
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/assets/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/assets/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/apple-touch-icon-152x152.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/assets/apple-touch-icon-180x180.png" />
+  <link rel="icon" type="image/png" href="/assets/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/assets/favicon-16x16.png" sizes="16x16" />
+  <meta name="application-name" content="Gstack"/>
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <meta name="msapplication-TileImage" content="/assets/mstile-144x144.png" />
+
+  <link type="text/css" rel="stylesheet" href="/assets/slate-theme.css">
+  <link type="text/css" rel="stylesheet" href="/assets/application.css">
+</head>
+<body>
+  <!--[if lt IE 8]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong>
+      browser. Please <a href="http://browsehappy.com/">upgrade your browser</a>
+      to improve your experience.</p>
+  <![endif]-->
+
+  <!-- HEADER -->
+  <div id="header_wrap" class="outer">
+      <header class="inner">
+        <a id="forkme_banner" href="https://github.com/gstackio/gstack-docs/blob/master/plugging-services.md">View on GitHub</a>
+
+        <a href="http://www.gstack.io" title="Gstack main website">
+          <img class="logo" src="/assets/logo-gstack-90x90.png" alt="Gstack">
+        </a>
+        <h1 id="project_title">Plug services into your apps</h1>
+        <h2 id="project_tagline"><em>“Who writes apps with no database out there? Who?”</em> <span class="nowrap">– B. Gandon</span></h2>
+
+      </header>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main role="main" id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+      <p><small><a href="/">← Back to Gstack Docs</a></small></p>
+
+<h2 id="available-services">Available services</h2>
+
+<p>To list the services that can be plugged into your application, run:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ gk marketplace
+
+service    plans                    description
+mysql      100mb-20cnx, 1gb-40cnx   MySQL databases, powered by MariaDB cluster
+postgres   shared, shared-nr        Reliable PostgrSQL Service
+</code></pre>
+</div>
+
+<p>These are the standard services that Gstack can provide. If you need custom
+services, you can push Docker containers and have your application use those.</p>
+
+<h2 id="plug-a-database-like-mysql">Plug a database, like MySQL</h2>
+
+<h3 id="available-plans">Available plans</h3>
+
+<p>In this section, we’ll take the example of a MySQL database. Let’s detail the
+available plans:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ gk marketplace -s mysql
+</code></pre>
+</div>
+
+<p>There are two basic plans.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>service plan   description             free or paid
+100mb-20cnx    Small MySQL Database    free
+1gb-40cnx      Medium MySQL Database   free
+</code></pre>
+</div>
+
+<p>The first is for small databases, below 100 MB of data. It allows 20
+concurrent connections to each created database.</p>
+
+<p>The second one allows larger databases up to 1 GB, and allows 40 concurrent
+connections to it.</p>
+
+<p>Both are powered by a MariaDB cluster that ensures good resiliency and
+durability.</p>
+
+<h3 id="plug-it-to-your-app">Plug it to your app</h3>
+
+<p>It’s a 2-steps process.</p>
+
+<ol>
+  <li>Create the database</li>
+  <li>Bind the database to an application</li>
+</ol>
+
+<h4 id="create-a-database">Create a database</h4>
+
+<p>To create the database, you specify the service name (i.e. the database
+technology here), the service plan (which is the capacity required here), and
+you give a name to this database.</p>
+
+<p>For example, let’s say you need a 100 MB MySQL database in your staging
+environment for your application called <code class="highlighter-rouge">jelly-beans</code>. Then we advise you to
+call it <code class="highlighter-rouge">mysql_db/jelly_beans_staging</code>. And you would type:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>gk create-service  mysql  100mb-20cnx  mysql_db/jelly-beans_staging
+</code></pre>
+</div>
+
+<p>Your database is ready for being used by an application!</p>
+
+<h4 id="bind-the-database">Bind the database</h4>
+
+<p>The recommended way of doing is to create a <code class="highlighter-rouge">manifest.yml</code> file, specify the
+database service name in there, and finaly run <code class="highlighter-rouge">gk push</code>.</p>
+
+<p>For the sample application of the <a href="../getting-started">Getting Started</a> guide,
+you would write such a following manifest. Use your favorite text editor and
+create this <code class="highlighter-rouge">manifest.yml</code> file at the root of your application directory:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nn">---</span>
+<span class="s">applications</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">my-first-gstack-app-42</span>
+    <span class="s">buildpack</span><span class="pi">:</span> <span class="s">go_buildpack</span>
+    <span class="s">memory</span><span class="pi">:</span> <span class="s">4M</span>
+    <span class="s">disk_quota</span><span class="pi">:</span> <span class="s">10M</span>
+    <span class="s">services</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">mysql_db/jelly_beans_staging</span>
+</code></pre>
+</div>
+
+<p>Here you’ll notice that we specified as
+<a href="https://en.wikipedia.org/wiki/YAML">YAML</a> properties the exact same arguments
+as we did on the command line: <code class="highlighter-rouge">-b go_buildpack</code>, <code class="highlighter-rouge">-m 4M</code> and <code class="highlighter-rouge">-k 10M</code>. The
+new part is the <code class="highlighter-rouge">services:</code> list, which only item specifies the database we’ve
+just created above.</p>
+
+<p>After this, you can run <code class="highlighter-rouge">gk push</code> without any arguments, because <code class="highlighter-rouge">gk</code> will
+find all the necessary information in this <code class="highlighter-rouge">manifest.yml</code>.</p>
+
+<h4 id="different-databases-for-different-environments">Different databases for different environments</h4>
+
+<p>When you use a <code class="highlighter-rouge">staging</code> space and a <code class="highlighter-rouge">production</code>space to model different
+environments, you create two manifest files instead of one. They will be
+called <code class="highlighter-rouge">manifest_staging.yml</code> and <code class="highlighter-rouge">manifest_production.yml</code>. Each one of them
+will specify a different database name. For example, the
+<code class="highlighter-rouge">manifest_production.yml</code> would look like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nn">---</span>
+<span class="s">applications</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">...</span>
+    <span class="s">...</span>
+    <span class="s">services</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">mysql_db/jelly_beans_production</span>
+</code></pre>
+</div>
+
+<p>And you would use one of them running <code class="highlighter-rouge">gk push -f manifest_staging.yml</code> or
+<code class="highlighter-rouge">gk push -f manifest_production.yml</code></p>
+
+<blockquote>
+  <p>When the application is already started, an alternate way of binding
+the database is to run the <code class="highlighter-rouge">gk bind-service</code> command and then do a
+<code class="highlighter-rouge">gk restage</code> for the app to become aware of the database. We won’t
+cover this option here, and let it as an exercise to the reader.</p>
+</blockquote>
+
+<h2 id="postgresql-databases">PostgreSQL databases</h2>
+
+<p>In this section, we’ll focus on some specificities of the PostgreSQL service,
+as provided by Gstack. For more info on how to create a database and bind it
+to an application, see the “<a href="#plug-a-database">Plug a database</a>” section
+above.</p>
+
+<p>For a start, let’s detail the available PostgreSQL plans:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ gk marketplace -s postgres
+
+service plan   description                                                     free or paid
+shared         A Reliable PostgreSQL database on a shared server.              free
+shared-nr      A PostgreSQL database with no replication on a shared server.   free
+</code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">shared</code> plan refers to PostgeSQL databases on a shared cluster. These are
+powered by <a href="http://bdr-project.org/docs/stable/">BDR</a>, a “Bi-Directional
+Replication” technology for building resilient PostgreSQL clusters.</p>
+
+<p>Unfortunately BDR has some limitations, especially with schema changes. See
+the <a href="http://bdr-project.org/docs/stable/ddl-replication-statements.html#DDL-REPLICATION-PROHIBITED-COMMANDS">Prohibited DDL statements</a>
+section of the BDR documentation to learn more about those.</p>
+
+<p>That’s why the <code class="highlighter-rouge">postgres</code> service also provides a <code class="highlighter-rouge">shared-nr</code> plan. This
+second option is a traditional PostgreSQL 9.4 database, with no replication,
+thus no limitation. The tradeoff is that it has more limited data durability
+for the user due to the lack of replication. For Gstack operators, it has less
+scaling flexibility due to the lack of clustering.</p>
+
+<h2 id="further-readings">Further readings</h2>
+
+<p>Now that you are confident in how to fuel your application with databases, why
+not try to <a href="../create-application">Build your own</a>?</p>
+
+<p><small><a href="/">← Back to Gstack Docs</a></small></p>
+
+    </section>
+  </main>
+
+  <!-- FOOTER  -->
+  <div id="footer_wrap" class="outer">
+    <footer class="inner">
+      <p>Built in <span style="font-family: 'Arial Unicode MS', 'Apple Symbols'; font-size: 130%;">☮</span> by <a href="http://gstack.io">Gstack</a>, with ♡ for you all.</p>
+    </footer>
+  </div>
+
+  <script type="text/javascript" src="/assets/vendor.js"></script>
+  <script type="text/javascript" src="/assets/application.js"></script>
+
+<!--
+  <script>
+    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+    e.src='https://www.google-analytics.com/analytics.js';
+    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+    ga('create','','auto');ga('send','pageview');
+  </script>
+-->
+  <!-- Google Tag Manager -->
+  <noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=GTM-WLHTPB" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WLHTPB');
+  </script>
+  <!-- End Google Tag Manager -->
+</body>
+</html>

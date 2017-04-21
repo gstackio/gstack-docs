@@ -1,0 +1,54 @@
+/* Give more space between sections, but only in main section */
+main h1,
+main h2,
+main h3,
+main h4,
+main h5,
+main h6 {
+  margin-top: 1.2em; }
+
+/* Reduce space above first section title */
+section > h1:first-child,
+section > h2:first-child,
+section > h3:first-child,
+section > h4:first-child,
+section > h5:first-child,
+section > h6:first-child {
+  margin-top: 0.5em !important; }
+
+/* Fix the size of code excerpts within headlines */
+/* They also look better with normal weight */
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+  font-size: inherit;
+  font-weight: normal; }
+
+/* Fix small text not being smaller, and have it compatible with inline code */
+small,
+small code {
+  font-size: 85%; }
+
+header .logo {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  width: 90px;
+  /* = font size */
+  height: 90px;
+  position: absolute;
+  top: 59.5px;
+  /* ( 209px [header height] - 90 px [logo height] ) * 0.5 */
+  left: -111px;
+  /* 90px (width) + 21px (0.5 font size) */ }
+
+.nowrap {
+  white-space: nowrap; }
