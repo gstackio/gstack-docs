@@ -39,7 +39,7 @@ like this:
     $ gk login
     API endpoint: https://api.gstack.me
 
-    Email> benjamin
+    Email> benjamin@exmple.org
 
     Password> ********
     Authenticating...
@@ -48,42 +48,66 @@ like this:
 Easy as that.
 
 After you first login, you are operating in the context of a Gstack
-“Organization”. A Gstack operator has created it for you, so you don't need to
-bother.
+“Organization”. A Gstack operator has created it for you, based on your family
+name. Anyway, you don't need to bother.
 
-Moreover, the applications you push will belong to a space. The Gstack
-operator has created two spaces named `staging` and `production`. For a first
-try, you'll need to target the `staging` space:
+Moreover, the applications you push will belong to a “Space”, inside your
+“Organization”. The Gstack operator has created a default space named
+`staging` for you to start using Gstack. Right now, you don't need to bother.
+“Organization” and “Space” are just organizational boxes that tell _where_
+your applications will be on Gstack.
 
-    gk target -s staging
-
-And you are ready.
+So, you are ready.
 
 
-## Push your first Docker container
+## Play around with a Docker container
 
-1. **Push** a sample container. To avoid name conflicts, pick a random number
-   between 1 and 100, like `42` and append it to the name of your app in the
-   following command:
+The whole point in this example is to push an application on Gstack, and see
+that you can access it immediately with your web brower.
 
-        gk push my-first-gstack-app-42 -o cloudfoundry/lattice-app -m 4M -k 10M
+This requires a domain name to acces your app. Good news, a Gstack operator
+has created a `gstack.me` subdomain for you only, named after your family
+name. For example, if your family name is `gandon`, your own subdomain will be
+`gandon.gstack.me`. You can see that with the following command:
+
+        $ gk domains
+        ...
+        gandon.gstack.me   owned
+
+1. Select your own subdomain and put it in a variable for later use (and
+   simplicity of this tutorial):
+
+        owned_domain=$(LANG=en gk domains | awk '/owned/{print $1}')
+
+2. **Push** a sample container.
+
+        gk push wow-cool -o gstack/sample-app -m 8M -k 16M -d "$owned_domain"
 
    <small>
-   (The `cloudfoundry/lattice-app` sample container is available
-   [on Docker Hub](https://hub.docker.com/r/cloudfoundry/lattice-app/).)
+   (The `gstack/sample-app` sample container is available
+   [on Docker Hub](https://hub.docker.com/r/gstack/sample-app/).)
    </small>
 
-2. **Browse** your app on the web:
+3. **Browse** your app on the web.
 
-        open http://my-first-gstack-app-42.gstack.me
+        open "http://wow-cool.$owned_domain"
 
-3. Once you're done, **delete** your test application and its route.
+4. **Scale up** your app to 3 instances.
 
-        gk delete my-first-gstack-app-42
-        gk delete-route -f gstack.me -n my-first-gstack-app-42
+        gk scale wow-cool -i 3
+
+5. **Refresh** your browser several time to see the app index changing. This
+   means that web requests are properly load-balanced across the 3 instances
+   of your app.
+
+6. Once you're done, **clean up** your resources, deleting the test app and
+   its route. (Once again, replace `gandon` by your actual family name.)
+
+        gk delete wow-cool
+        gk delete-route "$owned_domain" -n wow-cool
 
 
-## Push your first application
+## Push your own source code
 
 When you push a public container from Docker Hub, you get it online, but
 as-is. What about pushing some applicaiton code that we have customized
@@ -95,7 +119,7 @@ and deployed there within a private container.
 
 1. **Grab** a sample application
 
-        git clone https://github.com/cloudfoundry-samples/lattice-app.git gstack-gsg
+        git clone https://github.com/gstackio/sample-app.git gstack-gsg
         cd gstack-gsg
 
 2. **Customize** your application. Edit the `handlers/hello.go` file in your
@@ -106,28 +130,31 @@ and deployed there within a private container.
               Benjamin here! Gstack Rocks!
           </div>
 
-3. **Push** it to Gstack. To avoid name conflicts, pick a random number
-   between 1 and 100, like `42`, and append it to the name of your app in the
-   following command:
+3. **Push** it to Gstack.
 
-        gk push my-first-gstack-app-42 -b go_buildpack -m 4M -k 10M
+        owned_domain=$(LANG=en gk domains | awk '/owned/{print $1}')
 
-   <small>
-   (If you wonder what the above settings mean, try `gk push --help`.)
-   </small>
+        gk push i-am -d "$owned_domain"
 
+   Here you see that your source code is first built, and then deployed on
+   Gstack.
+
+   You'll notice that we create a shell variable named `owned_domain`. That's
+   just to automate the work of selecting your own subdomain when deploying
+   the app. This ensures your app is accessed with a URL that is unique.
 
 4. **Browse** your app on the web!
 
-        open http://my-first-gstack-app-42.gstack.me
+        open "http://i-am.$owned_domain"
 
    From there, you can try editing `handlers/hello.go` again, and `gk push`
    the result to update your app.
 
-5. Once you're done, **delete** your test application and its route.
+5. Once you're done, **delete** your the created resources, i.e. the test
+   application and its route.
 
-        gk delete my-first-gstack-app-42
-        gk delete-route -f gstack.me -n my-first-gstack-app-42
+        gk delete i-am
+        gk delete-route "$owned_domain" -n i-am
 
 
 ## Go further
