@@ -5,6 +5,7 @@ title: Plug services into your apps
 tagline: <em>“Who writes apps with no database out there? Who?”</em> <span class="nowrap">– B. Gandon</span>
 description:
 ---
+<small>[← Back to Gstack Docs]({{ site.baseurl }})</small>
 
 ## Available services
 
@@ -157,3 +158,5 @@ scaling flexibility due to the lack of clustering.
 
 Now that you are confident in how to fuel your application with databases, why
 not try to [Build your own](../create-application)?
+
+<small>[← Back to Gstack Docs]({{ site.baseurl }})</small>

@@ -5,6 +5,8 @@ title: Write your own application
 tagline: <em>“Developers love to express their creativity”</em> <span class="nowrap">– B. Gandon</span>
 description:
 ---
+<small>[← Back to Gstack Docs]({{ site.baseurl }})</small>
+
 ## Overview
 
 This is a 3-steps process.
@@ -82,3 +84,5 @@ implement an encrypted “HTTPS route”.
 To plug a database into your app, see our [Services Guide](../plugging-services).
 You'll learn how those services shall find their way into your
 `manifest.yml` deployment descriptor.
+
+<small>[← Back to Gstack Docs]({{ site.baseurl }})</small>

@@ -5,6 +5,7 @@ title: Your app in Gstack context
 tagline: <em>“Do you want any ham with your mashed potatoe?”</em> <span class="nowrap">– B. Gandon</span>
 description:
 ---
+<small>[← Back to Gstack Docs]({{ site.baseurl }})</small>
 
 When you [push a Docker container](./getting-started#push-your-first-docker-container)
 to Gstack, there is few mystery about how Gstack runs it. It just brings the
@@ -99,3 +100,5 @@ inside a Docker container.
 
 Now that you know how applications are deployed in Gstack, you might be
 interested in [writing your own](../create-application).
+
+<small>[← Back to Gstack Docs]({{ site.baseurl }})</small>

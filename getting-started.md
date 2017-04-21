@@ -5,6 +5,8 @@ title: Getting started with Gstack
 tagline: <em>“Every project should onboard newcomers in a snap”</em> <span class="nowrap">– B. Gandon</span>
 description:
 ---
+<small>[← Back to Gstack Docs]({{ site.baseurl }})</small>
+
 ## Get the Gstack tooling
 
 All you need to interact with Gstack is the `gk` command-line tool.
@@ -171,3 +173,5 @@ In this guide our sample application doesn't use any database. See our
 [Services Guide](../plugging-services) to learn how to plug a database into
 your app, and how the setup shall find its way into your `manifest.yml`
 deployment descriptor.
+
+<small>[← Back to Gstack Docs]({{ site.baseurl }})</small>
